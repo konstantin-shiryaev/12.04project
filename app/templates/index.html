@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="columns is-centered is-multiline">
+        {% for post in posts %}
+        <div class="column is-4">
+            <div class="box" style="min-height: 200px;">
+                <div class="title has-text-centered">
+                    {{ post.title }}
+                </div>
+                <div class="content has-text-grey-light">
+                    {{ post.slice }}
+                </div>
+                <a href="{% url 'app:post' post.slug %}" class="button is-fullwidth is-info is-outlined is-size-5">
+                    Читать далее
+                    &#8594
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'pagination.html' with objects=posts %}
+</div>
+{% endblock %}

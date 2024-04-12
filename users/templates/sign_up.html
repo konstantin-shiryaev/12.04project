@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column is-6">
+            <div class="box">
+                <div class="title is-5 has-text-centered">
+                    Регистрация
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="field">
+                        {{field}}
+                        <div class="help has-text-danger">
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="button is-success">
+                        Отправить
+                    </button>
+                </form>
+                <div class="is-flex is-justify-content-space-evenly is-align-items-center">
+                    <div class="has-text-grey">
+                        Есть аккаунт?
+                    </div>
+                    <a href="{% url 'users:sign-in' %}" class="button is-ghost">
+                        Войти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

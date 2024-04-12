@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column is-5">
+            <form method="post" class="box has-background-light">
+                {% csrf_token %}
+                <p class="title has-text-centered is-4 mb-5 has-text-black">
+                    Подтвердите удаление поста "{{ post }}"
+                </p>
+                <div class="has-text-centered">
+                    <button class="button is-danger">Подтвердить</button>
+                    <a class="button is-warning" href="{% url 'app:post' post.slug %}">
+                        Назад к посту
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

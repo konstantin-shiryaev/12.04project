@@ -1,0 +1,30 @@
+{% if objects.has_other_pages %}
+<nav class="pagination is-centered">
+    <div class="buttons is-left">
+        {% if objects.has_previous %}
+        <a class="pagination-previous" href="?page={{objects.previous_page_number}}">Назад</a>
+        <a class="pagination-link" href="?page=1">В начало</a>
+        {% else %}
+        <button class="pagination-previous" disabled>Назад</button>
+        {% endif %}       
+    </div>
+
+    <div class="buttons is-centered">
+        <ul class="pagination-list">
+            {% for page in objects.paginator.page_range %}
+            <li>
+                <a class="pagination-link{% if page == objects.number %} is-current {% endif %}" href="?page={{page}}">{{ page }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="buttons is-right">
+        {% if objects.has_next %}
+        <a class="pagination-next" href="?page={{objects.next_page_number}}">Далее</a>
+        <a class="pagination-next" href="?page={{ objects.paginator.num_pages }}">В конец</a>
+        {% else %}
+        <button class="pagination-next" disabled>Далее</button>
+        {% endif %}       
+    </div>
+</nav>
+{% endif %}

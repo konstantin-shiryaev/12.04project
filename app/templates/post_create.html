@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-content box">
+        <div class="title has-text-centered">Создание поста</div>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in post_form %}
+            <div class="field">
+                {% if field.name == 'comments_allowed' %}
+                <label for="{{field.id_for_label}}">
+                    {{field}}
+                    {{field.label}}
+                </label>
+                {% else %}
+                <div class="control">
+                    {{field}}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="file field">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="images" multiple>
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <ion-icon name="cloud-upload-outline">
+                            </ion-icon>
+                        </span>
+                        <span class="file-label">
+                            Выберите файлы…
+                        </span>
+                    </span>
+                </label>
+            </div>
+            <button class="button is-fullwidth is-success">
+                Отправить
+            </button>
+        </form>
+    </div>
+    <a class="modal-close is-large" onclick="window.history.back()"></a>
+</div>
+{% endblock %}

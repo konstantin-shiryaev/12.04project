@@ -1,0 +1,14 @@
+<form class="has-text-right" action="{% url 'app:like' %}">
+    <input type="hidden" name="model" value="{{ object_name }}">
+    <input type="hidden" name="value"
+        value="{% if object_name == 'comment' %}{{object.pk}}{% else %}{{object.slug}}{% endif %}">
+
+    <button class="button {% if user in object.likes.all %} is-success {% endif %}" value="like" name="action">
+        <ion-icon name="thumbs-up"></ion-icon>
+        <span class="ml-3">{{object.likes.count}}</span>
+    </button>
+    <button class="button {% if user in object.dislikes.all %} is-danger {% endif %}" value="dislike" name="action">
+        <ion-icon name="thumbs-down"></ion-icon>
+        <span class="ml-3">{{object.dislikes.count}}</span>
+    </button>
+</form>

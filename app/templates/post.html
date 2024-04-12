@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="column">
+    <div class="box" style="min-width: 100%; min-height: 80vh;">
+        <div class="buttons is-right">
+            <a href="{% url 'app:delete_post' post.slug %}" class="button">
+                <ion-icon name="trash"></ion-icon>
+            </a>
+        </div>
+        <div class="title has-text-centered">
+            {{ post.title }}
+        </div>
+
+        <div class="columns is-centered is-multiline" style="width: 100%;">
+            {% with photos=post.photo_set.all %}
+            {% for image in photos %}
+            <div class="column {% if photos|length > 1 %} is-5 {% else %} is-12 {% endif %}">
+                <img style="width: 100%;" src="{{ image.image.url }}" alt="" class="image post-image">
+            </div>
+            {% endfor %}
+            {% endwith %}
+        </div>
+        <div class="content has-text-centered">
+            {{post.content}}
+        </div>
+        <hr>
+        {% include 'likes.html' with object=post object_name="post" %}
+        <div class="author">
+            <div class="columns is-centered is-vcentered">
+                <div class="column is-3">
+                    <hr />
+                </div>
+                <div class="column is-1 image">
+                    <figure class="image is-128x128">
+                        <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="" />
+                    </figure>
+                </div>
+                <div class="column is-3">
+                    <hr />
+                </div>
+            </div>
+            <div class="has-text-centered">
+                <div class="title">{{post.author}}</div>
+                <div class="subtitle has-text-grey">Junior Backend Разработчик</div>
+                <a class="content has-text-link is-size-5">Постов: 5</a>
+            </div>
+        </div>
+    </div>
+    {% if post.comments_allowed %}
+    <div class="box">
+        {% if user.is_authenticated %}
+        <form action="" class="comment-form" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            {{field}}
+            {% endfor %}
+            <button>Отправить</button>
+        </form>
+        <div>
+            {% for comment in post.comment_set.all %}
+            <div class="columns is-centered">
+                <div class="column is-1">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image">
+                                <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/48x48.png"
+                                    alt="">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="box">
+                        <!-- {% if comment.parent %}
+                        <div class="has-text-right has-text-info">
+                            <span class="mr-1">
+                                <ion-icon name="arrow-undo"></ion-icon>
+                            </span>
+                            <span>В ответ на {{ comment.parent.user }}</span>
+                        </div>
+                        {% endif %} -->
+                        <div class="title is-3">
+                            {{comment.user}}
+                        </div>
+                        <div class="subtitle has-text-grey is-6">
+                            {{comment.date}}
+                        </div>
+                        <div class="content">
+                            {{comment.body}}
+                        </div>
+
+                        {% include 'likes.html' with object=comment object_name="comment" %}
+                        <div class="buttons is-right">
+                            <button class="button is-small" name="reply"
+                                onclick="toggleReplyForm('comment-{{comment.pk}}')">
+                                <ion-icon name="arrow-undo"></ion-icon>
+                            </button>
+                        </div>
+                        <form class="comment-form is-hidden" method="post" id="comment-{{comment.pk}}">
+                            {% csrf_token %}
+
+                            <input type="hidden" name="parent_id" value="{{comment.pk}}">
+
+                            {% for field in form %}
+                            {{field}}
+                            {% endfor %}
+                            <button>
+                                Отправить
+                            </button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="title is-4 has-text-centered">
+            Авторизуйтесь, чтобы увидеть комментарии
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="title has-text-white has-text-centered">
+        Автор запретил комментирование
+    </div>
+    {% endif %}
+    {% include "pagination.html" with objects=comments %}
+</div>
+{% endblock %}

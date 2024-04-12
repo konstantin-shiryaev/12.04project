@@ -1,0 +1,43 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+
+.post-image {
+    width: 60vh;
+    float: left;
+    margin: 0 20px;
+    border-radius: 5px;
+}
+
+.flex div {
+    margin: 5px 0;
+}
+
+input:not([type='checkbox']) {
+    width: 100% !important;
+    height: 5vh !important;
+    outline: none !important;
+    border: 1px solid grey !important;
+    border-radius: 5px !important;
+}
+
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-form {
+    display: flex !important;
+    gap: 10px;
+}
+
+.is-hidden {
+    display: none !important;
+}
